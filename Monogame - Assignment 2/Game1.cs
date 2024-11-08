@@ -10,9 +10,8 @@ namespace Monogame___Assignment_2
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        List<Rectangle> rectangles;
-        Texture2D textureSquare;
-        Rectangle squareRect;
+        Texture2D textureWood;
+        SpriteFont pumpkinFont;
 
         public Game1()
         {
@@ -23,17 +22,9 @@ namespace Monogame___Assignment_2
 
         protected override void Initialize()
         {
-            _graphics.PreferredBackBufferHeight = 640;
+            _graphics.PreferredBackBufferHeight = 720;
             _graphics.PreferredBackBufferWidth = 640;
             _graphics.ApplyChanges();
-
-            for (int i = 1; i < 9; i++)
-            {
-                for (int j = 1; j < 9; j++)
-                {
-                    squareRect = new Rectangle((80 * j), (i * 80), 80, 80);
-                }
-            }
 
             base.Initialize();
         }
@@ -41,9 +32,8 @@ namespace Monogame___Assignment_2
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            textureSquare = Content.Load<Texture2D>("rectangle");
-
-            // TODO: use this.Content to load your game content here
+            textureWood = Content.Load<Texture2D>("woodTile");
+            pumpkinFont = Content.Load<SpriteFont>("pumpkinFont");
         }
 
         protected override void Update(GameTime gameTime)
@@ -58,12 +48,20 @@ namespace Monogame___Assignment_2
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.BurlyWood);
 
             _spriteBatch.Begin();
-
-            _spriteBatch.Draw(textureSquare, squareRect, Color.Aquamarine);
-
+            _spriteBatch.DrawString(pumpkinFont, "Checkerboard!", new Vector2(100, 0), Color.Black);
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 1; j < 9; j++)
+                {
+                    if ((i % 2 == 0 && j % 2 == 0) || (i % 2 != 0 && j % 2 != 0))
+                        _spriteBatch.Draw(textureWood, new Rectangle((i * 80) ,(j * 80) ,80, 80), Color.PaleGoldenrod);
+                    else
+                        _spriteBatch.Draw(textureWood, new Rectangle((i * 80), (j * 80), 80, 80), Color.Brown);
+                }
+            }
             _spriteBatch.End();
 
             base.Draw(gameTime);
