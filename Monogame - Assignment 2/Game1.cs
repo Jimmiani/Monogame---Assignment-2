@@ -25,6 +25,7 @@ namespace Monogame___Assignment_2
             _graphics.PreferredBackBufferHeight = 720;
             _graphics.PreferredBackBufferWidth = 640;
             _graphics.ApplyChanges();
+            this.Window.Title = "Checkers!";
 
             base.Initialize();
         }
